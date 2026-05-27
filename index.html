@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unix 时间戳工具</title>
+    <meta
+      name="description"
+      content="实时 Unix 时间戳、时间戳转日期时间、日期时间转 Unix 时间戳。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/luxon@3.5.0/build/global/luxon.min.js"
+    ></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Unix Timestamp</p>
+          <h1>Unix 时间戳工具</h1>
+        </div>
+        <div class="timezone-chip">
+          <label for="global-zone">当前时区</label>
+          <div class="timezone-combobox" data-zone-picker>
+            <input
+              id="global-zone"
+              class="timezone-input"
+              type="search"
+              autocomplete="off"
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-controls="global-zone-list"
+              placeholder="搜索时区 / 国家，如 越南、印尼、UTC"
+            />
+            <button
+              class="zone-clear-button"
+              type="button"
+              aria-label="清空时区"
+              data-zone-clear
+            >
+              ×
+            </button>
+            <div class="timezone-list" id="global-zone-list" role="listbox"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="tool-panel now-panel" aria-labelledby="now-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="now-title">当前 Unix 时间戳</h2>
+          </div>
+        </div>
+        <div class="meta-grid">
+          <div>
+            <span>Unix 秒</span>
+            <div class="inline-result">
+              <strong id="current-seconds">-</strong>
+              <div class="inline-actions">
+                <button
+                  class="button secondary compact"
+                  id="pause-button"
+                  type="button"
+                >
+                  暂停
+                </button>
+                <button
+                  class="button primary compact"
+                  id="copy-now-button"
+                  type="button"
+                >
+                  复制
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <span>所选时区时间</span>
+            <strong id="current-local-time">-</strong>
+          </div>
+        </div>
+      </section>
+
+      <div class="tool-grid">
+        <section class="tool-panel" aria-labelledby="timestamp-to-time-title">
+          <div class="section-heading">
+            <div>
+              <h2 id="timestamp-to-time-title">时间戳转时间</h2>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="timestamp-input">Unix 时间戳（秒）</label>
+            <input
+              id="timestamp-input"
+              inputmode="numeric"
+              type="text"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="result-stack" id="timestamp-result">
+          </div>
+        </section>
+
+        <section class="tool-panel" aria-labelledby="time-to-timestamp-title">
+          <div class="section-heading">
+            <div>
+              <h2 id="time-to-timestamp-title">时间转时间戳</h2>
+            </div>
+          </div>
+
+          <div class="date-grid">
+            <div class="field-group">
+              <label for="year-input">年</label>
+              <input id="year-input" type="number" min="1" step="1" />
+            </div>
+            <div class="field-group">
+              <label for="month-input">月</label>
+              <input id="month-input" type="number" min="1" max="12" step="1" />
+            </div>
+            <div class="field-group">
+              <label for="day-input">日</label>
+              <input id="day-input" type="number" min="1" max="31" step="1" />
+            </div>
+            <div class="field-group">
+              <label for="hour-input">时</label>
+              <input id="hour-input" type="number" min="0" max="23" step="1" />
+            </div>
+            <div class="field-group">
+              <label for="minute-input">分</label>
+              <input
+                id="minute-input"
+                type="number"
+                min="0"
+                max="59"
+                step="1"
+              />
+            </div>
+            <div class="field-group">
+              <label for="second-input">秒</label>
+              <input
+                id="second-input"
+                type="number"
+                min="0"
+                max="59"
+                step="1"
+              />
+            </div>
+          </div>
+
+          <div class="conversion-output" id="configured-result">
+            <div class="unix-result-card">
+              <span>Unix 秒</span>
+              <div class="inline-result">
+                <strong id="configured-seconds">-</strong>
+                <button
+                  class="button primary compact"
+                  id="copy-configured-button"
+                  type="button"
+                >
+                  复制
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="form-error" id="configured-error" role="status"></p>
+        </section>
+      </div>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </main>
+  </body>
+</html>
